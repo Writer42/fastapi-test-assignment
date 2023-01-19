@@ -17,7 +17,7 @@
                 let messages = document.getElementById('messages')
                 let message = document.createElement('li')
                 let response = JSON.parse(event.data)
-                let content = document.createTextNode(response.listObject)
+                let content = document.createTextNode(`${response.objectNumber}. ${response.listObject}`)
                 message.appendChild(content)
                 messages.appendChild(message)
             };
