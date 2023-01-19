@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Тестовое задание</title>
+    </head>
+    <body>
+        <form action="" onsubmit="sendMessage(event)">
+            <input type="text" id="messageText"/>
+            <button>Send</button>
+        </form>
+        <ul id='messages'>
+        </ul>
+        
+        <script>
+            let socket = new WebSocket("ws://localhost:8000/ws");
+            socket.onmessage = function(event) {
+                let messages = document.getElementById('messages')
+                let message = document.createElement('li')
+                let response = JSON.parse(event.data)
+                let content = document.createTextNode(response.listObject)
+                message.appendChild(content)
+                messages.appendChild(message)
+            };
+            function sendMessage(event) {
+                let input = document.getElementById("messageText")
+                let requestBody = JSON.stringify({'listObject':input.value})
+                socket.send(requestBody)
+                input.value = ''
+                event.preventDefault()
+            }
+        </script>
+    </body>
+</html>
